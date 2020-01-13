@@ -8,5 +8,6 @@ data class Movie(
     val description: String,
     val year: String,
     val rating: Double,
-    val imageUrl: String
+    val imageUrl: String,
+    val isFavorite: Boolean = false
 )
