@@ -7,6 +7,9 @@ import com.maksim.moviecatalog.domain.model.Movie
  * Created by Maksim Novikov on 13-Jan-20.
  */
 interface MovieRepository {
-  fun getLatestMovies(): LiveData<List<Movie>>
+  fun getTrendingMovies(): LiveData<Resource<Boolean>>
   fun getFavoriteMovies(): LiveData<List<Movie>>
+  fun getMovie(movieId: Int): LiveData<Movie?>
+  fun getAllMovies(): LiveData<List<Movie>>
+  fun updateMovieFavoriteStatus(movieId: Int)
 }
