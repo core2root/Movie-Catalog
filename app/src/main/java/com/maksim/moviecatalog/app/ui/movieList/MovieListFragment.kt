@@ -104,7 +104,7 @@ class MovieListFragment : BaseFragment() {
     val fragment = MovieDetailFragment()
     fragment.arguments = bundle
 
-    addFragment(fragment, MovieDetailFragment.TAG)
+    addFragment(fragment, MovieDetailFragment.TAG, true)
   }
 
   private fun showFavoriteMoviesFragment() {
@@ -117,11 +117,20 @@ class MovieListFragment : BaseFragment() {
     addFragment(favoriteFragment, TAG)
   }
 
-  private fun addFragment(fragment: BaseFragment, tag: String) {
-    activity?.supportFragmentManager?.beginTransaction()
-      ?.add(R.id.main_container, fragment, tag)
-      ?.addToBackStack(tag)
-      ?.commit()
+  private fun addFragment(fragment: BaseFragment, tag: String, withAnimation: Boolean = false) {
+
+    val transaction = activity!!.supportFragmentManager.beginTransaction()
+    if (withAnimation)
+      transaction.setCustomAnimations(
+        android.R.anim.slide_in_left,
+        android.R.anim.slide_out_right,
+        android.R.anim.slide_in_left,
+        android.R.anim.slide_out_right
+      )
+
+    transaction.add(R.id.main_container, fragment, tag)
+      .addToBackStack(tag)
+      .commit()
   }
 
   private fun showAlert(title: String, message: String) {
