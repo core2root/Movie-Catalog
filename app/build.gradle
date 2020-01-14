@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -20,11 +20,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 }
 
 ext {
     lifecycleVersion = "2.1.0"
     recycleViewVrsion = "1.1.0"
+    gsonVersion = "2.8.2"
+    objectBoxVersion = "2.5.0"
+    picassoVersion = "2.71828"
+    retrofitVersion = "2.7.1"
 }
 
 dependencies {
@@ -39,8 +47,17 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycleVersion"
-
+    implementation "com.google.code.gson:gson:$gsonVersion"
     implementation "androidx.recyclerview:recyclerview:$recycleViewVrsion"
 
+
+    implementation "io.objectbox:objectbox-kotlin:$objectBoxVersion"
+    implementation "io.objectbox:objectbox-android:$objectBoxVersion"
+    kapt "io.objectbox:objectbox-processor:$objectBoxVersion"
+
+    implementation "com.squareup.picasso:picasso:$picassoVersion"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
 }
