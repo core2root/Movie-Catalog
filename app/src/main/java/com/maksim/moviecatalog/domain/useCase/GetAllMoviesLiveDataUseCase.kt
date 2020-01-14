@@ -5,10 +5,11 @@ import com.maksim.moviecatalog.domain.model.Movie
 import com.maksim.moviecatalog.domain.repository.MovieRepository
 
 /**
- * Created by Maksim Novikov on 13-Jan-20.
+ * Created by Maksim Novikov on 14-Jan-20.
  */
-class GetLatestMoviesUseCase(private val movieRepository: MovieRepository) {
+class GetAllMoviesLiveDataUseCase(private val movieRepository: MovieRepository) {
+
   fun execute(): LiveData<List<Movie>> {
-    return movieRepository.getLatestMovies()
+    return movieRepository.getAllMovies()
   }
 }
