@@ -34,19 +34,22 @@ class MovieDaoImpl(private val box: Box<MovieEntity>, private val mapper: MovieE
   override fun getMovie(movieId: Int): LiveData<Movie?> {
     val liveData = ObjectBoxLiveData(box.query().equal(MovieEntity_.id, movieId.toLong()).build())
     return Transformations.map(liveData) { entities ->
-      if(entities.isNotEmpty()){
+      if (entities.isNotEmpty()) {
         mapper.entityToDomain(entities[0])
-      }else{
+      } else {
         null
       }
     }
   }
 
   override fun saveMovies(movies: List<Movie>) {
-    val allMovies = box.all
+    //Take all ids from new movies
+    val ids = movies.map { it.id }.toIntArray()
+
+    val localMovies = box.query().`in`(MovieEntity_.id, ids).build().find()
     val newMovies = mapper.domainToEntity(movies)
     for (movie in newMovies) {
-      for (localMovie in allMovies) {
+      for (localMovie in localMovies) {
         if (movie.id == localMovie.id && localMovie.isFavorite) {
           movie.isFavorite = true
           break

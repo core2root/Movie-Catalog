@@ -40,16 +40,19 @@ class MovieServiceImpl : MovieService {
     })
   }
 
-  private fun handleResponse(response: Response<MovieApiResult>, callback: MovieService.Callback<List<ApiMovie>>){
-    try{
-      if(response.isSuccessful){
+  private fun handleResponse(
+    response: Response<MovieApiResult>,
+    callback: MovieService.Callback<List<ApiMovie>>
+  ) {
+    try {
+      if (response.isSuccessful) {
         val result = response.body()!!
         callback.onSuccess(result.results)
-      }else{
+      } else {
         callback.onError("Error getting movies code: ${response.code()}")
       }
-    }catch (e: Exception){
-
+    } catch (e: Exception) {
+      callback.onError(e.message ?: "Unknown error")
     }
   }
 }
